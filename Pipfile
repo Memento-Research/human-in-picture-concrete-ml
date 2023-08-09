@@ -6,7 +6,13 @@ name = "pypi"
 [packages]
 matplotlib = "*"
 numpy = "*"
-
+opencv-python = "*"
+jupyter = "*"
+torch = "*"
+scikit-learn = "*"
+tqdm = "*"
+wheel = "*"
+setuptools = "*"
 
 [dev-packages]
 
