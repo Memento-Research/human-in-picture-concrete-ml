@@ -9,6 +9,7 @@
 ## Resources
 
 - [MNIST Concrete ML example](https://github.com/zama-ai/concrete-ml/tree/main/use_case_examples/mnist)
+- [Convolutional Neural Network advanced example](https://github.com/zama-ai/concrete-ml/blob/main/docs/advanced_examples/ConvolutionalNeuralNetwork.ipynb)
 - [Dataset for training](https://www.kaggle.com/code/aliasgartaksali/human-vs-non-human-binary-classification/input)
 
 ## Reading material
