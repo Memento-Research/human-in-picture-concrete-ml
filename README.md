@@ -6,6 +6,17 @@
 - Identify the performance limits of a model for this problem using Concrete ML
 - Create benchmarks for different sizes of the input
 
+## Requirments
+
+- Kaggle account
+    You will need to have a Kaggle account in order to download the dataset, we recommend using Google Login.
+- Python3.9 installed
+
+## Installation
+
+- To install dependencies you will need to run `make deps`
+- To download the dataset you will need to run `make data`
+
 ## Resources
 
 - [MNIST Concrete ML example](https://github.com/zama-ai/concrete-ml/tree/main/use_case_examples/mnist)
