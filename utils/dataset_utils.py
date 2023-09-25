@@ -1,9 +1,12 @@
 import os
 import numpy as np
+import torch
+from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from PIL import Image
 
 
+# Load the dataset from the given paths
 def get_loaded_dataset(humans_path: str, not_humans_path: str, size: int):
     humans_files, humans_quantity = load_dir(humans_path)
     not_humans_files, not_humans_quantity = load_dir(not_humans_path)
@@ -45,3 +48,12 @@ def load_dir(dir_path: str):
         if '.jpg' in path:
             dir_files.append(os.path.join(dir_path, path))
     return dir_files, len(dir_files)
+
+
+# Create a DataLoader for training
+def create_dataloader(x, y, batch_size):
+    x_tensor = torch.Tensor(x)#.to(get_device())
+    y_tensor = torch.Tensor(y)#.to(get_device())
+    dataset = TensorDataset(x_tensor, y_tensor)
+    return DataLoader(dataset, batch_size=batch_size)
+
