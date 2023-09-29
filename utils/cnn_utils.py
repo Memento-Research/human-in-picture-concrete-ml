@@ -3,20 +3,22 @@ import torch
 from torch import nn
 from tqdm import tqdm
 
-from models.TinyCNN import TinyCNN
-from models.HeavyCNN import HeavyCNN
+
+# Create Network
+# Receive network class and instantiate it
+def create_network(network_class, n_classes):
+    return network_class(n_classes)
 
 
-## Train the CNN
+# Train the CNN
 # Train the network with Adam, output the test set accuracy every epoch
-def create_and_train_network(epochs, train_dataloader):
-    net = HeavyCNN(2)
+def train_network(net, epochs, train_dataloader):
     losses_bits = []
     optimizer = torch.optim.Adam(net.parameters())
     for _ in tqdm(range(epochs), desc=f"Training"):
         losses_bits.append(train_one_epoch(net, optimizer, train_dataloader))
 
-    return net, losses_bits
+    return losses_bits
 
 
 def train_one_epoch(net, optimizer, train_loader):
@@ -37,15 +39,14 @@ def train_one_epoch(net, optimizer, train_loader):
 
 
 # Test the network on the test set
+# No se usa en el notebook. Puede ser util para mas adelante
 @DeprecationWarning
 def test_networks(nets, bits_range, test_dataloader):
     for net, n_bits in zip(nets, bits_range):
-        test_torch(net, n_bits, test_dataloader)
+        test_network(net, n_bits, test_dataloader)
 
 
-def test_torch(net, n_bits, test_loader):
-    """Test the network: measure accuracy on the test set."""
-
+def test_network(net, n_bits, test_loader):
     # Freeze normalization layers
     net.eval()
 

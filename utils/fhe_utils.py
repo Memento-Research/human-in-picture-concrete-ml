@@ -5,7 +5,24 @@ from concrete.ml.torch.compile import compile_torch_model
 from tqdm import tqdm
 
 
+def compile_network(net, x_train, n_bits, p_error):
+    """Compile a network with Concrete ML."""
+    q_module = compile_torch_model(net, x_train, rounding_threshold_bits=n_bits, p_error=p_error)
+    return q_module
+
+
+def test_quantized_module(quantized_module, n_bits, test_dataloader, use_sim):
+    acc = test_with_concrete(
+        quantized_module,
+        test_dataloader,
+        use_sim=use_sim
+    )
+
+    print(f"{'Simulated' if use_sim else 'Real'} FHE execution for {n_bits} bit network accuracy: {acc:.2f}%")
+
+
 # Concrete ML testing function
+@DeprecationWarning
 def compile_and_test_with_concrete(net, x_train, test_dataloader):
     n_bits = 6
 
@@ -19,7 +36,7 @@ def compile_and_test_with_concrete(net, x_train, test_dataloader):
     )
     sim_time = time.time() - start_time
 
-    print(f"Simulated FHE execution for {n_bits} bit network accuracy: {acc:.2f}%")
+    print(f"Simulated FHE execution for {n_bits} bit network accuracy: {acc:.2f}% takes {sim_time:.2f}s")
 
     return q_module, acc
 
@@ -62,4 +79,4 @@ def test_with_concrete(quantized_module, test_loader, use_sim):
     # Compute and report results
     n_correct = np.sum(all_targets == all_y_pred)
 
-    return n_correct / len(test_loader)
+    return (n_correct / len(test_loader)) * 100
