@@ -1,5 +1,4 @@
 import time
-
 import numpy as np
 from concrete.ml.torch.compile import compile_torch_model
 from tqdm import tqdm
