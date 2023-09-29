@@ -1,18 +1,17 @@
 import matplotlib.pyplot as plt
 
 
-def plot_training_loss(bits_range, losses):
+def plot_training_loss(losses_bits):
     fig = plt.figure(figsize=(8, 4))
-    for losses_bits in losses:
-        plt.plot(losses_bits)
+    plt.plot(losses_bits)
     plt.ylabel("Cross Entropy Loss")
     plt.xlabel("Epoch")
-    plt.legend(list(map(str, bits_range)))
     plt.title("Training set loss during training")
     plt.grid(True)
     plt.show()
 
 
+@DeprecationWarning
 def plot_accuracy(bits_range, accuracies, accum_bits):
     fig = plt.figure(figsize=(12, 8))
     plt.rcParams["font.size"] = 14

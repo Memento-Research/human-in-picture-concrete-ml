@@ -4,27 +4,19 @@ from torch import nn
 from tqdm import tqdm
 
 from models.TinyCNN import TinyCNN
+from models.HeavyCNN import HeavyCNN
 
 
 ## Train the CNN
 # Train the network with Adam, output the test set accuracy every epoch
-def create_and_train_networks(bits_range, epochs, train_dataloader):
-    nets = []
-    losses = []
+def create_and_train_network(epochs, train_dataloader):
+    net = HeavyCNN(2)
+    losses_bits = []
+    optimizer = torch.optim.Adam(net.parameters())
+    for _ in tqdm(range(epochs), desc=f"Training"):
+        losses_bits.append(train_one_epoch(net, optimizer, train_dataloader))
 
-    for n_bits in bits_range:
-        net = TinyCNN(2, n_bits)
-        losses_bits = []
-        optimizer = torch.optim.Adam(net.parameters())
-        for _ in tqdm(range(epochs), desc=f"Training with {n_bits} bit weights and activations"):
-            losses_bits.append(train_one_epoch(net, optimizer, train_dataloader))
-        losses.append(losses_bits)
-
-        # Finally, disable pruning (sets the pruned weights to 0)
-        # net.toggle_pruning(False)
-        nets.append(net)
-
-    return nets, losses
+    return net, losses_bits
 
 
 def train_one_epoch(net, optimizer, train_loader):
@@ -45,6 +37,7 @@ def train_one_epoch(net, optimizer, train_loader):
 
 
 # Test the network on the test set
+@DeprecationWarning
 def test_networks(nets, bits_range, test_dataloader):
     for net, n_bits in zip(nets, bits_range):
         test_torch(net, n_bits, test_dataloader)

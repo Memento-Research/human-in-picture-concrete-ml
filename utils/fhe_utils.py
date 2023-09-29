@@ -1,39 +1,28 @@
 import time
-import torch
+
 import numpy as np
-from torch import nn
+from concrete.ml.torch.compile import compile_torch_model
 from tqdm import tqdm
-from concrete.ml.torch.compile import compile_brevitas_qat_model
 
 
 # Concrete ML testing function
-def test_networks_with_concrete(nets, bits_range, x_train, test_dataloader):
-    accs = []
-    accum_bits = []
-    sim_time = []
+def compile_and_test_with_concrete(net, x_train, test_dataloader):
+    n_bits = 6
 
-    for net, n_bits in zip(nets, bits_range):
-        q_module = compile_brevitas_qat_model(net, x_train)
+    q_module = compile_torch_model(net, x_train, rounding_threshold_bits=n_bits, p_error=0.1)
 
-        accum_bits.append(q_module.fhe_circuit.graph.maximum_integer_bit_width())
+    start_time = time.time()
+    acc = test_with_concrete(
+        q_module,
+        test_dataloader,
+        use_sim=True
+    )
+    sim_time = time.time() - start_time
 
-        start_time = time.time()
-        accs.append(
-            test_with_concrete(
-                q_module,
-                test_dataloader,
-                use_sim=True,
-            )
-        )
-        sim_time.append(time.time() - start_time)
+    print(f"Simulated FHE execution for {n_bits} bit network accuracy: {acc:.2f}%")
 
-    for idx, vl_time_bits in enumerate(sim_time):
-        print(
-            f"Simulated FHE execution for {bits_range[idx]} bit network: {vl_time_bits:.2f}s, "
-            f"{len(test_dataloader) / vl_time_bits:.2f}it/s"
-        )
+    return q_module, acc
 
-    return accs, accum_bits
 
 # We introduce the `test_with_concrete` function which allows us to test a Concrete ML model in one of two modes:
 # - in FHE
@@ -72,7 +61,5 @@ def test_with_concrete(quantized_module, test_loader, use_sim):
 
     # Compute and report results
     n_correct = np.sum(all_targets == all_y_pred)
-    print(all_targets)
-    print(all_y_pred)
 
     return n_correct / len(test_loader)
