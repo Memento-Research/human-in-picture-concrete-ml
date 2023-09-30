@@ -6,8 +6,8 @@ from tqdm import tqdm
 
 # Create Network
 # Receive network class and instantiate it
-def create_network(network_class, n_classes):
-    return network_class(n_classes)
+def create_network(network_class, image_size, n_classes):
+    return network_class(image_size, n_classes)
 
 
 # Train the CNN
