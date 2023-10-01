@@ -14,8 +14,9 @@ from models.HeavyCNN import HeavyCNN
 humans_path = './data/human-and-non-human/training_set/training_set/humans'
 not_humans_path = './data/human-and-non-human/training_set/training_set/non-humans'
 IMAGE_SIZE = 64
-IMAGES_TO_LOAD = 100  # Load 100 images from each class
+IMAGES_TO_LOAD = 250  # Load 100 images from each class
 
+# Load the dataset
 x_train, x_test, y_train, y_test = get_loaded_dataset(
     humans_path,
     not_humans_path,
@@ -46,14 +47,19 @@ plot_training_loss(losses)
 # Test the network in fp32
 test_network(net, n_bits, test_dataloader)
 
+# Compile the network with Concrete ML
+print("Compiling network with Concrete ML...")
 configuration = Configuration(show_graph=False,
-                              show_statistics=False)
+                              show_statistics=False,
+                              show_progress=True)
 q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=False, configuration=configuration)
 
 # Test the network in FHE using simulation
+print("Testing in FHE using real FHE simulation...")
 test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
 
 # Generate keys first, this may take some time (up to 30min)
+print("Generating key...")
 t = time.time()
 q_module_fhe.fhe_circuit.keygen()
 print(f"Keygen time: {time.time() - t:.2f}s")
@@ -74,11 +80,13 @@ save_image(x[0], "saved_image.jpg")
 #
 # save_image(img, "saved_image.jpg")
 
+# Test the network in FHE using real FHE execution
+print("Testing in FHE using real FHE execution...")
 t = time.time()
 res = test_with_concrete(
     q_module_fhe,
     mini_test_dataloader,
-    use_sim=False,
+    use_sim=True,
 )
 print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
 print(f"Accuracy in FHE: {res:.2f}%")
