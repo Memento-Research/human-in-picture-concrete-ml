@@ -52,7 +52,7 @@ print("Compiling network with Concrete ML...")
 configuration = Configuration(show_graph=False,
                               show_statistics=False,
                               show_progress=True)
-q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=False, configuration=configuration)
+q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=True, configuration=configuration)
 
 # Test the network in FHE using simulation
 print("Testing in FHE using real FHE simulation...")
@@ -86,7 +86,7 @@ t = time.time()
 res = test_with_concrete(
     q_module_fhe,
     mini_test_dataloader,
-    use_sim=True,
+    use_sim=False,
 )
 print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
 print(f"Accuracy in FHE: {res:.2f}%")
