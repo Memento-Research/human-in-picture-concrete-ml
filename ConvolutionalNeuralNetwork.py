@@ -1,6 +1,7 @@
 import time
 import torch.utils
 import numpy as np
+from concrete.fhe import Configuration
 
 from utils.dataset_utils import get_loaded_dataset, create_dataloader, process_images, save_image
 from utils.cnn_utils import create_network, train_network, test_network
@@ -12,7 +13,7 @@ from models.HeavyCNN import HeavyCNN
 
 humans_path = './data/human-and-non-human/training_set/training_set/humans'
 not_humans_path = './data/human-and-non-human/training_set/training_set/non-humans'
-IMAGE_SIZE = 128
+IMAGE_SIZE = 64
 IMAGES_TO_LOAD = 100  # Load 100 images from each class
 
 x_train, x_test, y_train, y_test = get_loaded_dataset(
@@ -45,7 +46,9 @@ plot_training_loss(losses)
 # Test the network in fp32
 test_network(net, n_bits, test_dataloader)
 
-q_module_fhe = compile_network(net, x_train, n_bits, p_error)
+configuration = Configuration(show_graph=False,
+                              show_statistics=False)
+q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=False, configuration=configuration)
 
 # Test the network in FHE using simulation
 test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
@@ -61,6 +64,7 @@ x = np.array([x_test[index]])
 y = np.array([y_test[index]])
 mini_test_dataloader = create_dataloader(x, y, 1)
 save_image(x[0], "saved_image.jpg")
+
 # path = "./data/white.jpg"
 #
 # img = process_images([path], IMAGE_SIZE, 1)[0]
@@ -69,6 +73,7 @@ save_image(x[0], "saved_image.jpg")
 # mini_test_dataloader = create_dataloader(x, y, 1)
 #
 # save_image(img, "saved_image.jpg")
+
 t = time.time()
 res = test_with_concrete(
     q_module_fhe,

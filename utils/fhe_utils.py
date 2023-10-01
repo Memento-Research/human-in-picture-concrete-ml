@@ -1,12 +1,23 @@
 import time
+
 import numpy as np
+from concrete.fhe import Configuration
 from concrete.ml.torch.compile import compile_torch_model
 from tqdm import tqdm
 
+from utils.time_utils import log_time
 
-def compile_network(net, x_train, n_bits, p_error):
+
+@log_time
+def compile_network(net, x_train, n_bits: int, p_error: float, verbose=False, configuration: Configuration = None):
     """Compile a network with Concrete ML."""
-    q_module = compile_torch_model(net, x_train, rounding_threshold_bits=n_bits, p_error=p_error)
+    q_module = compile_torch_model(net,
+                                   x_train,
+                                   rounding_threshold_bits=n_bits,
+                                   p_error=p_error,
+                                   verbose=verbose,
+                                   configuration=configuration
+                                   )
     return q_module
 
 
