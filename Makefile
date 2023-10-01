@@ -5,7 +5,7 @@ deps:
 	. cnn_venv/bin/activate && pip install -r requirements.txt
 
 data:
-	kaggle datasets download -d aliasgartaksali/human-and-non-human
+	. cnn_venv/bin/activate && kaggle datasets download -d aliasgartaksali/human-and-non-human
 	unzip human-and-non-human.zip
 	rm human-and-non-human.zip
 	mkdir data
