@@ -76,12 +76,11 @@ def main():
     q_module_fhe.fhe_circuit.keygen()
     print(f"Keygen time: {time.time() - t:.2f}s")
 
-    # Run inference in FHE on a single encrypted example
-    index = 20
-    x = np.array([x_test[index]])
-    y = np.array([y_test[index]])
+    # Run inference in FHE on n encrypted examples
+    n = 10
+    x = np.array(x_test[:n])
+    y = np.array(y_test[:n])
     mini_test_dataloader = create_dataloader(x, y, 1)
-    save_image(x[0], "saved_image.jpg")
 
     # path = "./data/white.jpg"
     #
@@ -95,13 +94,14 @@ def main():
     # Test the network in FHE using real FHE execution
     print("Testing in FHE using real FHE execution...")
     t = time.time()
-    res = test_with_concrete(
+    res, times = test_with_concrete(
         q_module_fhe,
         mini_test_dataloader,
         use_sim=False,
     )
     print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
     print(f"Accuracy in FHE: {res:.2f}%")
+    print(f"Times: {times}")
 
 
 if __name__ == "__main__":

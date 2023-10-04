@@ -22,7 +22,7 @@ def compile_network(net, x_train, n_bits: int, p_error: float, verbose=False, co
 
 
 def test_quantized_module(quantized_module, n_bits, test_dataloader, use_sim):
-    acc = test_with_concrete(
+    acc, times = test_with_concrete(
         quantized_module,
         test_dataloader,
         use_sim=use_sim
@@ -63,9 +63,13 @@ def test_with_concrete(quantized_module, test_loader, use_sim):
     all_y_pred = np.zeros((len(test_loader)), dtype=np.int64)
     all_targets = np.zeros((len(test_loader)), dtype=np.int64)
 
+    times = []
+
     # Iterate over the test batches and accumulate predictions and ground truth labels in a vector
     idx = 0
     for data, target in tqdm(test_loader):
+        start_time = time.time()
+
         data = data.numpy()
         target = target.numpy()
 
@@ -86,7 +90,10 @@ def test_with_concrete(quantized_module, test_loader, use_sim):
         # Update the index
         idx += target.shape[0]
 
+        # measure time
+        times.append(time.time() - start_time)
+
     # Compute and report results
     n_correct = np.sum(all_targets == all_y_pred)
 
-    return (n_correct / len(test_loader)) * 100
+    return (n_correct / len(test_loader)) * 100, times
