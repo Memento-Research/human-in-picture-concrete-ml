@@ -9,7 +9,6 @@ from utils.fhe_utils import compile_network, test_quantized_module, test_with_co
 from utils.graphics_utils import plot_training_loss
 
 from models.TinyCNN import TinyCNN
-from models.HeavyCNN import HeavyCNN
 
 humans_path = './data/human-and-non-human/training_set/training_set/humans'
 not_humans_path = './data/human-and-non-human/training_set/training_set/non-humans'
@@ -52,7 +51,7 @@ print("Compiling network with Concrete ML...")
 configuration = Configuration(show_graph=False,
                               show_statistics=False,
                               show_progress=True)
-q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=True, configuration=configuration)
+q_module_fhe = compile_network(net, x_train, n_bits, p_error, verbose=False, configuration=configuration)
 
 # Test the network in FHE using simulation
 print("Testing in FHE using real FHE simulation...")

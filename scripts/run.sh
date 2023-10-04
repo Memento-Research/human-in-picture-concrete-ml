@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 rm -rf .artifacts
 
 while true; do
-    python3 ConvolutionalNeuralNetwork.py
+    python3 src/ConvolutionalNeuralNetwork.py
     exit_code=$?
 
     if [ $exit_code -ne 1 ]; then
