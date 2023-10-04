@@ -31,26 +31,6 @@ def test_quantized_module(quantized_module, n_bits, test_dataloader, use_sim):
     print(f"{'Simulated' if use_sim else 'Real'} FHE execution for {n_bits} bit network accuracy: {acc:.2f}%")
 
 
-# Concrete ML testing function
-@DeprecationWarning
-def compile_and_test_with_concrete(net, x_train, test_dataloader):
-    n_bits = 6
-
-    q_module = compile_torch_model(net, x_train, rounding_threshold_bits=n_bits, p_error=0.1)
-
-    start_time = time.time()
-    acc = test_with_concrete(
-        q_module,
-        test_dataloader,
-        use_sim=True
-    )
-    sim_time = time.time() - start_time
-
-    print(f"Simulated FHE execution for {n_bits} bit network accuracy: {acc:.2f}% takes {sim_time:.2f}s")
-
-    return q_module, acc
-
-
 # We introduce the `test_with_concrete` function which allows us to test a Concrete ML model in one of two modes:
 # - in FHE
 # - in the clear, using simulated FHE execution
