@@ -12,16 +12,13 @@ IMAGE_SIZE="64"
 # Remove .artifacts at the beginning
 rm -rf .artifacts
 
-while true; do
-    python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE"
-    exit_code=$?
+  python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE"
+  exit_code=$?
 
-    if [ $exit_code -ne 1 ]; then
-        echo -e "${GREEN}Program finished successfully.${NC}"
-        break
-    fi
+  if [ $exit_code -ne 1 ]; then
+      echo -e "${GREEN}Program finished successfully.${NC}"
+      exit 0
+  fi
 
-    echo -e "${RED}Program exited with code 1. Deleting .artifacts and rerunning...${NC}"
-    rm -rf .artifacts
-
-done
+  echo -e "${RED}Program exited with code 1.${NC}"
+  rm -rf .artifacts
