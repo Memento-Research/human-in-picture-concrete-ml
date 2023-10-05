@@ -3,6 +3,7 @@ import torch.utils
 import numpy as np
 from concrete.fhe import Configuration
 
+from utils.results_utils import export_times
 from utils.dataset_utils import get_loaded_dataset, create_dataloader, process_images, save_image
 from utils.cnn_utils import create_network, train_network, test_network
 from utils.fhe_utils import compile_network, test_quantized_module, test_with_concrete
@@ -21,9 +22,9 @@ def main():
     # Parse arguments
     args = parse_arguments(required_args)
     print(args)
-    IMAGE_SIZE = int(args["IMAGE_SIZE"])
+    image_size = int(args["IMAGE_SIZE"])
 
-    IMAGES_TO_LOAD = 250  # Load 100 images from each class
+    images_to_load = 250  # Load 100 images from each class
 
     humans_path = './data/human-and-non-human/training_set/training_set/humans'
     not_humans_path = './data/human-and-non-human/training_set/training_set/non-humans'
@@ -32,8 +33,8 @@ def main():
     x_train, x_test, y_train, y_test = get_loaded_dataset(
         humans_path,
         not_humans_path,
-        IMAGE_SIZE,
-        IMAGES_TO_LOAD,
+        image_size,
+        images_to_load,
     )
 
     train_dataloader = create_dataloader(x_train, y_train, 64)
@@ -43,15 +44,15 @@ def main():
     n_bits = 6  # Quantization bit-width
     p_error = 0.1  # Probability of error
 
-    net = create_network(TinyCNN, IMAGE_SIZE, n_classes)
+    net = create_network(TinyCNN, image_size, n_classes)
 
     torch.manual_seed(42)
 
     # Epochs to train for
-    N_EPOCHS = 150
+    n_epochs = 150
 
     # Train the network
-    losses = train_network(net, N_EPOCHS, train_dataloader)
+    losses = train_network(net, n_epochs, train_dataloader)
 
     # Plot the cross-entropy loss for each epoch
     plot_training_loss(losses)
@@ -101,7 +102,8 @@ def main():
     )
     print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
     print(f"Accuracy in FHE: {res:.2f}%")
-    print(f"Times: {times}")
+
+    export_times(image_size, times)
 
 
 if __name__ == "__main__":
