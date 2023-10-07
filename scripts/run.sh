@@ -15,10 +15,12 @@ rm -rf .artifacts
 python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE"
 exit_code=$?
 
-if [ $exit_code -ne 1 ]; then
+if [ $exit_code -eq 0 ]; then
     echo -e "${GREEN}Program finished successfully.${NC}"
     exit 0
 fi
 
-echo -e "${RED}Program exited with code 1.${NC}"
+echo -e "${RED}Program exited with code ${exit_code}.${NC}"
+
+echo
 rm -rf .artifacts
