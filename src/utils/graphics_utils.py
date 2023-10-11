@@ -39,7 +39,7 @@ def plot_times(directory_path: str):
             std_deviation = np.std(data_values)
 
             # Append the values to the respective lists
-            image_sizes.append(image_size)
+            image_sizes.append(image_size * image_size)
             average_values.append(average_value)
             std_deviations.append(std_deviation)
 
@@ -53,8 +53,8 @@ def plot_times(directory_path: str):
     plt.figure(figsize=(8, 6))
     plt.errorbar(image_sizes, average_values, yerr=std_deviations, fmt='-o', label='Average with Std Deviation',
                  markersize=5)
-    plt.xlabel('Image Size')
-    plt.ylabel('Values')
+    plt.xlabel('Image Size [px]')
+    plt.ylabel('Time [s]')
     plt.title('Average and Standard Deviation for Multiple Files')
     plt.legend()
     plt.grid(True)
