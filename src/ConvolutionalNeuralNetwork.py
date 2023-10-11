@@ -14,6 +14,8 @@ from models.TinyCNN import TinyCNN
 
 required_args = {
     "IMAGE_SIZE": None,
+    "N_BITS": None,
+    "P_ERROR": None,
 }
 
 
@@ -22,9 +24,16 @@ def main():
     # Parse arguments
     args = parse_arguments(required_args)
     print(args)
-    image_size = int(args["IMAGE_SIZE"])
 
+    image_size = int(args["IMAGE_SIZE"])
+    n_bits = int(args["N_BITS"])  # Quantization bit-width
+    p_error = float(args["P_ERROR"])  # Probability of error
+
+    n_classes = 2  # humans and not humans
     images_to_load = 250  # Load 100 images from each class
+
+    # Epochs to train for
+    n_epochs = 150
 
     humans_path = './data/human-and-non-human/training_set/training_set/humans'
     not_humans_path = './data/human-and-non-human/training_set/training_set/non-humans'
@@ -40,16 +49,9 @@ def main():
     train_dataloader = create_dataloader(x_train, y_train, 64)
     test_dataloader = create_dataloader(x_test, y_test, 1)
 
-    n_classes = 2  # humans and not humans
-    n_bits = 6  # Quantization bit-width
-    p_error = 0.1  # Probability of error
-
     net = create_network(TinyCNN, image_size, n_classes)
 
     torch.manual_seed(42)
-
-    # Epochs to train for
-    n_epochs = 150
 
     # Train the network
     losses = train_network(net, n_epochs, train_dataloader)
@@ -71,7 +73,7 @@ def main():
     print("Testing in FHE using simulation FHE execution...")
     test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
 
-    # Generate keys first, this may take some time (up to 30min)
+    # Generate keys
     print("Generating key...")
     t = time.time()
     q_module_fhe.fhe_circuit.keygen()
@@ -103,6 +105,7 @@ def main():
     print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
     print(f"Accuracy in FHE: {res:.2f}%")
 
+    # Export times to txt file
     export_times(image_size, times)
 
 

@@ -8,11 +8,13 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 IMAGE_SIZE="64"
+N_BITS="6"
+P_ERROR="0.1"
 
 # Remove .artifacts at the beginning
 rm -rf .artifacts
 
-python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE"
+python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE" "$N_BITS" "$P_ERROR"
 exit_code=$?
 
 if [ $exit_code -eq 0 ]; then
