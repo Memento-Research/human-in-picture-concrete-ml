@@ -3,7 +3,7 @@ import torch.utils
 import numpy as np
 from concrete.fhe import Configuration
 
-from utils.results_utils import export_times
+from utils.results_utils import export_results, export_losses
 from utils.dataset_utils import get_loaded_dataset, create_dataloader, process_images, save_image
 from utils.cnn_utils import create_network, train_network, test_network
 from utils.fhe_utils import compile_network, test_quantized_module, test_with_concrete
@@ -16,6 +16,8 @@ required_args = {
     "IMAGE_SIZE": None,
     "N_BITS": None,
     "P_ERROR": None,
+    "USE_FHE": None,
+    "N_TIMES": None,
 }
 
 
@@ -28,6 +30,8 @@ def main():
     image_size = int(args["IMAGE_SIZE"])
     n_bits = int(args["N_BITS"])  # Quantization bit-width
     p_error = float(args["P_ERROR"])  # Probability of error
+    use_sim = args["USE_FHE"] == "F"  # Use FHE or not
+    n_times = int(args["N_TIMES"])  # Execution times
 
     n_classes = 2  # humans and not humans
     images_to_load = 250  # Load 100 images from each class
@@ -60,7 +64,7 @@ def main():
     plot_training_loss(losses)
 
     # Test the network in fp32
-    test_network(net, n_bits, test_dataloader)
+    clear_precision = test_network(net, n_bits, test_dataloader)
 
     # Compile the network with Concrete ML
     print("Compiling network with Concrete ML...")
@@ -71,7 +75,7 @@ def main():
 
     # Test the network in FHE using simulation
     print("Testing in FHE using simulation FHE execution...")
-    test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
+    fhe_precision = test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
 
     # Generate keys
     print("Generating key...")
@@ -100,13 +104,14 @@ def main():
     res, times = test_with_concrete(
         q_module_fhe,
         mini_test_dataloader,
-        use_sim=False,
+        use_sim=True,
     )
     print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
     print(f"Accuracy in FHE: {res:.2f}%")
 
-    # Export times to txt file
-    export_times(image_size, times)
+    # Export results to txt file
+    export_results(image_size, n_bits, p_error, clear_precision, fhe_precision, times, use_sim, n_times)
+    export_losses(image_size, n_bits, p_error, clear_precision, fhe_precision, losses, use_sim, n_times)
 
 
 if __name__ == "__main__":

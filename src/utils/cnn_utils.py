@@ -68,7 +68,10 @@ def test_network(net, n_bits, test_loader):
 
     # Print out the accuracy as a percentage
     n_correct = np.sum(all_targets == all_y_pred)
+    precision = n_correct / len(test_loader) * 100
     print(
         f"Test accuracy for {n_bits}-bit weights and activations: "
-        f"{n_correct / len(test_loader) * 100:.2f}%"
+        f"{precision:.2f}%"
     )
+
+    return precision

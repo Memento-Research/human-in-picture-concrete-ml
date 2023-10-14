@@ -29,6 +29,7 @@ def test_quantized_module(quantized_module, n_bits, test_dataloader, use_sim):
     )
 
     print(f"{'Simulated' if use_sim else 'Real'} FHE execution for {n_bits} bit network accuracy: {acc:.2f}%")
+    return acc
 
 
 # We introduce the `test_with_concrete` function which allows us to test a Concrete ML model in one of two modes:
