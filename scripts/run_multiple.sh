@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source cnn_venv/bin/activate
-
 # ANSI escape codes for colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -17,7 +15,7 @@ use_fhe=(       "T"     "T"     "T"     "T"     "F"   "F"   "F"    "F"    "F"   
 for ((i=0; i<${#image_sizes[@]}; i++)); do
     for ((j=0; j<${times[i]}; j++)); do
         echo -e "${GREEN}Running program with image size ${image_sizes[i]}, n_bits ${n_bits[i]}, p_error ${p_errors[i]}, use_fhe ${use_fhe[i]} for the ${j}th time.${NC}"
-        python3.10 src/ConvolutionalNeuralNetwork.py "${image_sizes[i]}" "${n_bits[i]}" "${p_errors[i]}" "${use_fhe[i]}" "${j}"
+        poetry run python3 src/ConvolutionalNeuralNetwork.py "${image_sizes[i]}" "${n_bits[i]}" "${p_errors[i]}" "${use_fhe[i]}" "${j}"
         exit_code=$?
 
         if [ $exit_code -eq 0 ]; then

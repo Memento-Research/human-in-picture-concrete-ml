@@ -18,12 +18,10 @@
 
 ### Python version
 
-- It is recommended to use [Python 3.10.12](https://www.python.org/downloads/release/python-31012/).
-- Or if you are using [pyenv](https://github.com/pyenv/pyenv)
+- For administrating Python this project uses Poetry.
+- Python 3.10
 
-```shell
-pyenv install 3.10.12
-```
+If you don't already have Poetry installed, you can run `make deps` to installed it. Make sure to have installed `curl` before running the command.
 
 ## Installation
 
@@ -34,6 +32,16 @@ pyenv install 3.10.12
 ### Dataset
 
 - To download the dataset you will need to run `make data`.
+
+## Running the project
+
+### Single run
+
+`make run`
+
+### Benchmarks
+
+`make benchmark`
 
 ## Resources
 
