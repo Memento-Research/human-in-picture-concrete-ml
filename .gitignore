@@ -137,3 +137,4 @@ dmypy.json
 .DS_Store
 
 .artifacts
+saved_image.jpg
