@@ -16,8 +16,9 @@ required_args = {
     "IMAGE_SIZE": None,
     "N_BITS": None,
     "P_ERROR": None,
-    "USE_FHE": None,
+    "MODE": None,
     "N_TIMES": None,
+    "SUBDIRECTORY": None,
 }
 
 
@@ -30,8 +31,9 @@ def main():
     image_size = int(args["IMAGE_SIZE"])
     n_bits = int(args["N_BITS"])  # Quantization bit-width
     p_error = float(args["P_ERROR"])  # Probability of error
-    use_sim = args["USE_FHE"] == "F"  # Use FHE or not
+    use_sim = args["MODE"] == "use_sim"  # Use FHE or not
     n_times = int(args["N_TIMES"])  # Execution times
+    subdirectory = args["SUBDIRECTORY"]  # Subdirectory to save results
 
     n_classes = 2  # humans and not humans
     images_to_load = 250  # Load 100 images from each class
@@ -104,14 +106,14 @@ def main():
     res, times = test_with_concrete(
         q_module_fhe,
         mini_test_dataloader,
-        use_sim=True,
+        use_sim=use_sim,
     )
     print(f"Time per inference in FHE: {(time.time() - t) / len(mini_test_dataloader):.2f}")
     print(f"Accuracy in FHE: {res:.2f}%")
 
     # Export results to txt file
-    export_results(image_size, n_bits, p_error, clear_precision, fhe_precision, times, use_sim, n_times)
-    export_losses(image_size, n_bits, p_error, clear_precision, fhe_precision, losses, use_sim, n_times)
+    export_results(subdirectory, image_size, n_bits, p_error, clear_precision, fhe_precision, times, use_sim, n_times)
+    export_losses(subdirectory, image_size, n_bits, p_error, clear_precision, fhe_precision, losses, use_sim, n_times)
 
 
 if __name__ == "__main__":
