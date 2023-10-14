@@ -9,7 +9,7 @@
 ## Requirments
 
 - Kaggle account
-    You will need to have a Kaggle account in order to download the dataset, we recommend using Google Login.
+    You will need to have a Kaggle account in order to download the dataset, we recommend using Google Login. After creating an account you will need to download a `kaggle.json` file as the API key. You can find that file by going to [Your Profile](https://www.kaggle.com/settings/account) and scrolling down to the `API` section. Then create a new token and you will download the `kaggle.json`.
 - Python3.9 installed
 
 ## Installation
