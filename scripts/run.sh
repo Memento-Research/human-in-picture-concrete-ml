@@ -14,7 +14,7 @@ P_ERROR="0.1"
 # Remove .artifacts at the beginning
 rm -rf .artifacts
 
-python3 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE" "$N_BITS" "$P_ERROR"
+python3.10 src/ConvolutionalNeuralNetwork.py "$IMAGE_SIZE" "$N_BITS" "$P_ERROR" "T" 1
 exit_code=$?
 
 if [ $exit_code -eq 0 ]; then

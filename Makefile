@@ -1,7 +1,7 @@
 .PHONY: deps
 
 deps:
-	python3 -m venv cnn_venv
+	python3.10 -m venv cnn_venv
 	. cnn_venv/bin/activate && pip install -r requirements.txt
 	mkdir -p results/times
 	mkdir -p results/losses
@@ -13,3 +13,12 @@ data:
 	rm human-and-non-human.zip
 	mkdir -p data
 	mv human-and-non-human data/human-and-non-human
+
+run:
+	. cnn_venv/bin/activate && ./scripts/run.sh
+
+run_multiple:
+	. cnn_venv/bin/activate && ./scripts/run_multiple.sh
+
+benchmark:
+	. cnn_venv/bin/activate && ./scripts/benchmark.sh

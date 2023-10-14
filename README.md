@@ -6,7 +6,7 @@
 - Identify the performance limits of a model for this problem using Concrete ML.
 - Create benchmarks for different sizes of the input.
 
-## Requirments
+## Requirements
 
 ### Kaggle account
 
@@ -18,7 +18,12 @@
 
 ### Python version
 
-- It is recommended to use [Python 3.9](https://www.python.org/downloads/release/python-390/).
+- It is recommended to use [Python 3.10.12](https://www.python.org/downloads/release/python-31012/).
+- Or if you are using [pyenv](https://github.com/pyenv/pyenv)
+
+```shell
+pyenv install 3.10.12
+```
 
 ## Installation
 
