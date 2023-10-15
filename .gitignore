@@ -1,4 +1,5 @@
 .idea
+.run/
 .vscode
 
 data
@@ -138,4 +139,5 @@ dmypy.json
 .DS_Store
 
 .artifacts
+
 saved_image.jpg
