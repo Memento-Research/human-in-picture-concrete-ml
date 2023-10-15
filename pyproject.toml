@@ -10,6 +10,7 @@ python = ">3.10, <3.11"
 concrete-ml = "^1.2.1"
 pillow = "^10.0.1"
 matplotlib = "^3.8.0"
+kaggle = "^1.5.16"
 
 [build-system]
 requires = ["poetry-core"]
