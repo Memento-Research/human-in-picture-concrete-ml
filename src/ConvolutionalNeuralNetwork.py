@@ -36,7 +36,7 @@ def main():
     subdirectory = args["SUBDIRECTORY"]  # Subdirectory to save results
 
     n_classes = 2  # humans and not humans
-    images_to_load = 250  # Load 100 images from each class
+    images_to_load = None  # Load 100 images from each class. None runs on all images
 
     # Epochs to train for
     n_epochs = 150
@@ -63,7 +63,7 @@ def main():
     losses = train_network(net, n_epochs, train_dataloader)
 
     # Plot the cross-entropy loss for each epoch
-    plot_training_loss(losses)
+    # plot_training_loss(losses)
 
     # Test the network in fp32
     clear_precision = test_network(net, n_bits, test_dataloader)
