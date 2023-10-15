@@ -18,10 +18,9 @@
 
 ### Python version
 
-- For administrating Python this project uses Poetry.
-- Python 3.10
-
-If you don't already have Poetry installed, you can run `make deps` to installed it. Make sure to have installed `curl` before running the command.
+- Required Python version: [3.10](https://www.python.org/downloads/release/python-3100/) < 3.11
+- This project uses Poetry. If you don't already have Poetry installed, `make deps` will install it for you.
+    - Make sure to have installed `curl` before running the command.
 
 ## Installation
 
@@ -37,11 +36,26 @@ If you don't already have Poetry installed, you can run `make deps` to installed
 
 ### Single run
 
-`make run`
+- To run the project only once you'll need to run:
+
+```bash
+make run
+```
 
 ### Benchmarks
 
-`make benchmark`
+- To run the benchmarks you'll need to run:
+
+```bash
+make benchmark
+```
+
+- This will run the benchmarks for the following input sizes:
+    - 32x32
+    - 64x64
+    - 96x96
+    - 128x128
+- Brace yourself, this will take a while.
 
 ## Resources
 
@@ -49,9 +63,11 @@ If you don't already have Poetry installed, you can run `make deps` to installed
 - [Convolutional Neural Network advanced example](https://github.com/zama-ai/concrete-ml/blob/main/docs/advanced_examples/ConvolutionalNeuralNetwork.ipynb).
 - [Dataset used for training](https://www.kaggle.com/code/aliasgartaksali/human-vs-non-human-binary-classification/input).
 
-## Reading material
+### Reading material
 
 - [Zama Whitepaper](https://whitepaper.zama.ai/).
 - [Homomorphic Encryption 101](https://www.zama.ai/post/homomorphic-encryption-101).
 - [Fully Homomorphic Encryption Using Ideal Lattices](https://www.cs.cmu.edu/~odonnell/hits09/gentry-homomorphic-encryption.pdf).
 - [Concrete ML from Zama](https://docs.zama.ai/concrete-ml/).
+
+---
