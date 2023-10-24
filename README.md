@@ -15,6 +15,8 @@
 - You can find that file by going to [Your Profile](https://www.kaggle.com/settings/account) and scrolling down to
   the `API` section.
 - Then create a new token and you will download the `kaggle.json`.
+- Create a new hidden dictory called `.kaggle` in the home directory.
+- Move `kaggle.json` to `.kaggle`
 
 ### Python version
 
