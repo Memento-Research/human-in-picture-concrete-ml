@@ -29,3 +29,11 @@ data_processing:
 	./scripts/data_processing.sh
 
 benchmark: run_multiple data_processing
+
+help:
+	@echo "deps: install dependencies"
+	@echo "data: download and unzip data"
+	@echo "run: run the model"
+	@echo "run_multiple: run the model with different parameters"
+	@echo "data_processing: process the data"
+	@echo "benchmark: run the model with different parameters and process the data"
