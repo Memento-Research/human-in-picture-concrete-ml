@@ -30,6 +30,9 @@ data_processing:
 
 benchmark: run_multiple data_processing
 
+webapp:
+	./scripts/webapp.sh
+
 help:
 	@echo "deps: install dependencies"
 	@echo "data: download and unzip data"

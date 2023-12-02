@@ -2,6 +2,7 @@ import time
 import torch.utils
 import numpy as np
 from concrete.fhe import Configuration
+from concrete.ml.deployment import FHEModelDev
 
 from utils.results_utils import export_results, export_losses
 from utils.dataset_utils import get_loaded_dataset, create_dataloader, process_images, save_image
@@ -78,6 +79,9 @@ def main():
     # Test the network in FHE using simulation
     print("Testing in FHE using simulation FHE execution...")
     fhe_precision = test_quantized_module(q_module_fhe, n_bits, test_dataloader, use_sim=True)
+
+    model = FHEModelDev('./deployment', q_module_fhe)
+    model.save()
 
     # Generate keys
     print("Generating key...")
