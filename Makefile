@@ -39,4 +39,5 @@ help:
 	@echo "run: run the model"
 	@echo "run_multiple: run the model with different parameters"
 	@echo "data_processing: process the data"
+	@echo "webapp: run the webapp"
 	@echo "benchmark: run the model with different parameters and process the data"
