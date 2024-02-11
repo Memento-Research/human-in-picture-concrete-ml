@@ -1,4 +1,4 @@
-# Human in picture using Concrete ML
+# Human In Picture (HIP) using Concrete ML
 
 ## Objective
 
@@ -28,11 +28,19 @@
 
 ### Dependencies
 
-- To install dependencies you will need to run `make deps`.
+- To install dependencies you will need to run: 
+
+```sh
+make deps
+```
 
 ### Dataset
 
-- To download the dataset you will need to run `make data`.
+- To download the dataset you will need to run:
+
+```sh
+make data
+```
 
 ## Running the project
 
@@ -58,6 +66,17 @@ make benchmark
     - 96x96
     - 128x128
 - Brace yourself, this will take a while.
+
+### Webapp
+
+- The webapp is a POF heavily inspired by [Zama's encrypted image filtering example found on hugging face](https://huggingface.co/spaces/zama-fhe/encrypted_image_filtering).
+- To run the webapp locally the following command is needed:
+
+```sh
+make webapp
+```
+
+- A more detailed explanation can be found in [the webapps README file](/src/webapp/README.md).
 
 ## Resources
 
