@@ -1,7 +1,7 @@
 
 deps:
 	curl -sSL https://install.python-poetry.org | python3 -
-	poetry install
+	poetry install --no-root
 	mkdir -p results/times/image_size
 	mkdir -p results/times/n_bits
 	mkdir -p results/times/p_error
