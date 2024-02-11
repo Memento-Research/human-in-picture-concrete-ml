@@ -69,7 +69,7 @@ make benchmark
 
 ### Webapp
 
-- The webapp is a POF heavily inspired by [Zama's encrypted image filtering example found on hugging face](https://huggingface.co/spaces/zama-fhe/encrypted_image_filtering).
+- The webapp is a proof of concept heavily inspired by [Zama's encrypted image filtering example found on hugging face](https://huggingface.co/spaces/zama-fhe/encrypted_image_filtering).
 - To run the webapp locally the following command is needed:
 
 ```sh
@@ -78,17 +78,16 @@ make webapp
 
 - A more detailed explanation can be found in [the webapps README file](/src/webapp/README.md).
 
-## Resources
+## References
 
-- [MNIST Concrete ML example](https://github.com/zama-ai/concrete-ml/tree/main/use_case_examples/mnist).
-- [Convolutional Neural Network advanced example](https://github.com/zama-ai/concrete-ml/blob/main/docs/advanced_examples/ConvolutionalNeuralNetwork.ipynb).
-- [Dataset used for training](https://www.kaggle.com/code/aliasgartaksali/human-vs-non-human-binary-classification/input).
-
-### Reading material
-
+- [Introduction to homomorphic encryption](https://www.zama.ai/introduction-to-homomorphic-encryption)
 - [Zama Whitepaper](https://whitepaper.zama.ai/).
 - [Homomorphic Encryption 101](https://www.zama.ai/post/homomorphic-encryption-101).
 - [Fully Homomorphic Encryption Using Ideal Lattices](https://www.cs.cmu.edu/~odonnell/hits09/gentry-homomorphic-encryption.pdf).
 - [Concrete ML from Zama](https://docs.zama.ai/concrete-ml/).
+- [Encrypted Image Filtering Using Homomorphic Encryption Blog Post](https://www.zama.ai/post/encrypted-image-filtering-using-homomorphic-encryption)
+- [MNIST Concrete ML example](https://github.com/zama-ai/concrete-ml/tree/main/use_case_examples/mnist).
+- [Convolutional Neural Network advanced example](https://github.com/zama-ai/concrete-ml/blob/main/docs/advanced_examples/ConvolutionalNeuralNetwork.ipynb).
+- [`human-vs-non-human` dataset used for training](https://www.kaggle.com/code/aliasgartaksali/human-vs-non-human-binary-classification/input).
 
 ---
