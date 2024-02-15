@@ -1,65 +1,36 @@
----
-title: Image Filtering On Encrypted Data Using Fully Homomorphic Encryption
-emoji: 📸 🌄
-colorFrom: purple
-colorTo: purple
-sdk: gradio
-sdk_version: 3.40.1
-app_file: app.py
-pinned: true
-tags: [FHE, PPML, privacy, privacy preserving machine learning, image processing, 
-  homomorphic encryption, security]
-python_version: 3.8.16
----
-
-# Image filtering using FHE
+# Image recognition using FHE
 
 ## Run the application on your machine
 
-In this directory, ie `image_filtering`, you can do the following steps.
+In this directory, ie `fhe`, you can do the following steps.
 
 ### Install dependencies
 
-First, create a virtual env and activate it:
+First, position yourself in the root directory of the project and run the following `make` command:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+cd ..
+make deps
 ```
 
-Then, install required packages:
+Then, install git LFS to get both the server and client used to run the webapp:
 
 ```bash
-pip3 install pip --upgrade
-pip3 install -U pip wheel setuptools --ignore-installed
-pip3 install -r requirements.txt --ignore-installed
+sudo apt-get install git-lfs
+# or for macos: brew install git-lfs
+git lfs install
+git lfs pull
 ```
-
-The above steps should only be done once.
 
 ## Run the app 
 
 In a terminal, run:
 
 ```bash
-source .venv/bin/activate
-python3 app.py
+make webapp
 ```
 
 ## Interact with the application
 
-Open the given URL link (search for a line like `Running on local URL:  http://127.0.0.1:8888/`).
-
-
-## Generate new filters
-
-It is also possible to manually add some new filters in `filters.py`. Yet, in order to be able to use
-them interactively in the app, you first need to update the `AVAILABLE_FILTERS` list found in `common.py`
-and then compile them by running :
-
-```bash
-python3 generate_dev_filters.py
-```
-
-Check it finishes well (by printing "Done!").
+Open the given URL link that defaults to port `8888` (search in your terminal for a line `Running on local URL:  http://127.0.0.1:8888/` or [press here](http://localhost:8888/) to open the default port link).
 
