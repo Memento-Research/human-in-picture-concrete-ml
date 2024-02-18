@@ -330,7 +330,7 @@ def get_output(user_id, filter_name):
             # Decrypt the image using a different (wrong) key for display
             output_image_representation = decrypt_output_with_wrong_key(encrypted_output, filter_name)
 
-            return output_image_representation
+            return encrypted_output
         else:
             raise gr.Error("Please wait for the FHE execution to be completed.")
 
@@ -385,9 +385,9 @@ with (demo):
     gr.Markdown(
         """
         <p align="center">
-            <img width=200 src="https://avatars.githubusercontent.com/u/129918791?s=200&v=4">
+            <img width=200 src="https://cdn.discordapp.com/attachments/1081023782187184210/1208849941439451206/Marca-ITBA-Color-ALTA.png?ex=65e4c83d&is=65d2533d&hm=b2e5e4e22667682f36bc06c765e308bd9eb350f94ba34fb8936172846a1bd238&">
         </p>
-        <h1 align="center">Human in Picture On Encrypted Data Using Fully Homomorphic Encryption</h1>
+        <h1 align="center">Image Processing using Fully Homomorphic Encryption</h1>
         <p align="center">
             <a href="https://github.com/Memento-Research"> <img style="vertical-align: middle; display:inline-block; margin-right: 3px;" width=15 src="https://user-images.githubusercontent.com/5758427/197972109-faaaff3e-10e2-4ab6-80f5-7531f7cfb08f.png">Memento Research</a>
             —
@@ -427,8 +427,7 @@ with (demo):
     gr.Markdown("#### Notes")
     gr.Markdown(
         """
-        - The private key is used to encrypt and decrypt the data and will never be shared.
-        - No public key is required for these filter operators.
+        - hip (human in picture) filter processes 32x32 px images.
         """
     )
     
@@ -465,31 +464,31 @@ with (demo):
         label="Total FHE execution time (in seconds):", max_lines=1, interactive=False
     )
 
-    gr.Markdown("### Step 7: Receive the encrypted output image from the server.")
-    gr.Markdown(
-        "The image displayed here is the encrypted result sent by the server, which has been "
-        "decrypted using a different private key. This is only used to visually represent an "
-        "encrypted image."
-    )
-    get_output_button = gr.Button("Receive the encrypted output image from the server.")
+    gr.Markdown("### Step 7: Receive the encrypted output from the server.")
+    # gr.Markdown(
+    #     "The image displayed here is the encrypted result sent by the server, which has been "
+    #     "decrypted using a different private key. This is only used to visually represent an "
+    #     "encrypted image."
+    # )
+    get_output_button = gr.Button("Receive the encrypted output from the server.")
 
     with gr.Row():
-        encrypted_output_representation = gr.Image(
-            label=f"Encrypted output representation ({INPUT_SHAPE[0]}x{INPUT_SHAPE[1]}):", 
+        encrypted_output_representation = gr.Textbox(
+            label=f"Encrypted output representation ({INPUT_SHAPE[0]}x{INPUT_SHAPE[1]}):",
             interactive=False,
-            height=256,
-            width=256,
+            height=128,
+            width=128,
         )
 
     gr.Markdown("## Client side")
     gr.Markdown(
         "The encrypted output is sent back to the client, who can finally decrypt it with the "
-        "private key. Only the client is aware of the original image and its transformed version."
+        "private key. Only the client is aware of the original image and its output."
     )
 
     gr.Markdown("### Step 8: Decrypt the output.")
     gr.Markdown(
-        "The image displayed on the left is the input image used during the demo. The output image "
+        "The image displayed on the left is the input image used during the demo. The output "
         "can be seen on the right."
     )   
     decrypt_button = gr.Button("Decrypt the output")
@@ -500,8 +499,8 @@ with (demo):
             input_image.value,
             label=f"Input image ({INPUT_SHAPE[0]}x{INPUT_SHAPE[1]}):",
             interactive=False,
-            height=256,
-            width=256,   
+            height=128,
+            width=128,
         )
 
         output_result = gr.Textbox(type="text", label="Output", markdown=True)
@@ -530,8 +529,8 @@ with (demo):
 
     # Button to send the encodings to the server using post method
     get_output_button.click(
-        get_output, 
-        inputs=[user_id, filter_name], 
+        get_output,
+        inputs=[user_id, filter_name],
         outputs=[encrypted_output_representation]
     )
 
